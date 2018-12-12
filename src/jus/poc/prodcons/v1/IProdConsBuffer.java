@@ -1,6 +1,8 @@
 package jus.poc.prodcons.v1;
 
-
+/* Interface contenant le "squelette" que doit respecter nos implémentations.
+ * On doit donc au minimum implémenter ces trois fonctions en respectants leurs spécifications.
+ */
 public interface IProdConsBuffer {
 
 	/**

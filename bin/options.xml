@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-	<entry key="nbP">3</entry>
-	<entry key="nbC">10</entry>
+	<entry key="nbP">2</entry>
+	<entry key="nbC">3</entry>
 	<entry key="BufSz">3</entry>
-	<entry key="ProdTime">1000</entry>
-	<entry key="ConsTime">2000</entry>
-	<entry key="Mavg">5</entry>
+	<entry key="ProdTime">10</entry>
+	<entry key="ConsTime">10</entry>
+	<entry key="Mavg">3</entry>
+	<entry key="Navg">2</entry>
 </properties>

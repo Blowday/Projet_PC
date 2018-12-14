@@ -1,6 +1,7 @@
-package jus.poc.prodcons.v1;
+package jus.poc.prodcons.v2;
 
 import java.util.Arrays;
+import java.util.concurrent.Semaphore;
 
 /* Notre implémentations de IProdConsBuffer utilisant la solution directe
  */
@@ -11,19 +12,21 @@ public class ProdConsBuffer implements IProdConsBuffer {
 	 */
 	private Message[] m_buffer;
 	private int m_size;
+	private Semaphore m_prodSem;
+    private Semaphore m_consSem;
 	
 	public ProdConsBuffer(int size) {
 		m_size = size;
 		m_buffer = new Message[m_size];
 		Arrays.fill(m_buffer, null);
+		m_prodSem = new Semaphore(m_size);
+		m_consSem = new Semaphore(0);
 	}
 	
 	@Override
-	public synchronized void put(Message m) throws InterruptedException {
-		/* Si le buffer est plein, on attend */
-		while(nmsg() == m_size) {
-			wait();
-		}
+	public void put(Message m) throws InterruptedException {
+		/* On demande un "permis" si le buffer n'est pas plein */
+		m_prodSem.acquire();
 		
 		/* On déplace le curseur i au bon endroit dans le buffer 
 		 * et on ajouter le message donné. */
@@ -33,16 +36,14 @@ public class ProdConsBuffer implements IProdConsBuffer {
 		//System.out.println("Un message a été déposé sur le buffer !");
 		System.out.println(this);
 		
-		/* On préviens les threads en attente */
-		notifyAll();
+		/* On rend un permis aux consommateurs */
+		m_consSem.release();
 	}
 
 	@Override
 	public synchronized Message get() throws InterruptedException {
-		/* Si le buffer est vide, on attend */
-		while (nmsg() == 0) {
-			wait();
-		}
+		/* On demande un permis s'il y a quelque chose à lire */
+		m_consSem.acquire();
 		
 		/* On lit le premier message, puis on décale tous les autres vers la gauche */
 		Message m = m_buffer[0];
@@ -54,8 +55,8 @@ public class ProdConsBuffer implements IProdConsBuffer {
 		//System.out.println("Un message a été lu depuis le buffer !");
 		System.out.println(this);
 		
-		/* On préviens les threads en attente */
-		notifyAll();
+		/* On libère un permis aux producteurs */
+		m_prodSem.release();
 		
 		return m;		
 	}

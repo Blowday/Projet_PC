@@ -1,4 +1,4 @@
-package jus.poc.prodcons.v1;
+package jus.poc.prodcons.v2;
 
 /* Classe message à implémenter
  * Choisir un message utile pour aider à débuguer

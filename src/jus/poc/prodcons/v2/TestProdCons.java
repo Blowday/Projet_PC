@@ -1,4 +1,4 @@
-package jus.poc.prodcons.v1;
+package jus.poc.prodcons.v2;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class TestProdCons {
         try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {e.printStackTrace();}
-        System.out.println("\nSimulation réalisée en : " + tempsSimu + " millisecondes avec la version 1.");
+        System.out.println("\nSimulation réalisée en : " + tempsSimu + " millisecondes avec la version 2.");
 		
 		// fin du programme
 		
